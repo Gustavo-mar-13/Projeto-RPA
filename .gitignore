@@ -1,0 +1,16 @@
+# Ambiente virtual
+Probot/
+
+# Python
+__pycache__/
+*.pyc
+
+# Dados
+data/raw/
+data/processed/
+
+# Logs
+logs/
+
+# Config
+.env
