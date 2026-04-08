@@ -1,111 +1,118 @@
-# 🤖 RPA - Automação de Coleta e Processamento de Dados Climáticos
+# 🤖 RPA - Monitoramento Climático Automatizado
 
 ## 📌 Sobre o Projeto
 
-Este projeto é uma automação (RPA) desenvolvida em Python com o objetivo de coletar, processar e organizar dados climáticos de forma automática.
+Automação (RPA) desenvolvida em Python para coletar, processar e reportar dados climáticos de Manaus em tempo real.
 
-Ele integra **consumo de API + web scraping + processamento de dados**, criando um fluxo completo de coleta até a geração de informações tratadas.
+O sistema intercepta a API interna do MSN Clima via Playwright, processa os dados, salva em CSV e gera relatórios em PDF enviados automaticamente por e-mail.
 
 ---
 
 ## 🚀 Funcionalidades
 
-* 🌐 Coleta de dados climáticos via API
-* 🤖 Web scraping automatizado (Playwright)
-* 📄 Download automatizado de arquivos (PDF)
-* 🔄 Processamento e análise de dados
-* 🖥️ Interface simples para execução do sistema
-* 📊 Organização de dados em formato estruturado
+- 🌐 Interceptação da API do MSN Clima via Playwright
+- 🖥️ Interface gráfica para controle do robô (dark mode)
+- 💾 Salvamento automático em CSV a cada ciclo
+- ⚠️ Classificação automática de alertas (CRÍTICO / Normal)
+- 📄 Geração de relatório PDF com as últimas 24h de dados
+- 📧 Envio automático do relatório por e-mail via Gmail SMTP
 
 ---
 
 ## 🧠 Como o sistema funciona
+Usuário clica "Iniciar"
+↓
+interface.py inicia loop em thread separada
+↓
+weather_scraper.py abre Chromium e intercepta API do MSN
+↓
+Retorna → { temperatura, condicao, sensacao }
+↓
+interface.py classifica e salva em 2 CSVs
+↓
+pdf_email.py gera PDF e envia pro e-mail (execução manual)
 
-Fluxo do projeto:
-
-Usuário → Interface → Coleta de Dados → Processamento → Armazenamento
-
-1. O usuário inicia o sistema pela interface
-2. O robô coleta dados via API e scraping
-3. Os dados são tratados e analisados
-4. Os resultados são organizados e armazenados
 
 ---
 
 ## 🛠️ Tecnologias utilizadas
 
-* Python 3.x
-* Playwright
-* Requests
-* Pandas
-* JSON
+- Python 3.x
+- Playwright
+- CustomTkinter
+- Pandas
+- fpdf
+- smtplib
 
 ---
 
 ## 📁 Estrutura do Projeto
 
-```
-src/
- ├── automation/
- │    ├── data_collection/
- │    │    └── weather_api.py
- │    ├── analysis/
- │    │    └── analyze_data.py
- │    ├── weather_scraper.py
- │    ├── processar_dados.py
- │    ├── download_pdf.py
- │    └── main_loop.py
- └── interface.py
-```
+Projeto-RPA/
+├── src/
+│   └── automation/
+│       └── data_collection/
+│           └── weather_scraper.py  # Motor de coleta via Playwright
+├── interface.py                    # Interface gráfica + orquestrador
+├── pdf_email.py                    # Geração de PDF + envio por e-mail
+├── requirements.txt
+└── README.md
 
 ---
 
-## ⚙️ Como executar o projeto
+## ⚙️ Como executar
 
 ### 1. Clone o repositório
 
-```
+```bash
 git clone https://github.com/Gustavo-mar-13/Projeto-RPA.git
 cd Projeto-RPA
 ```
 
-### 2. Crie um ambiente virtual (opcional, mas recomendado)
+### 2. Crie um ambiente virtual
 
-```
+```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
 ### 3. Instale as dependências
 
-```
+```bash
 pip install -r requirements.txt
+playwright install chromium
 ```
 
 ### 4. Execute o sistema
 
+```bash
+python interface.py
 ```
-python src/interface.py
+
+### 5. Para gerar e enviar o relatório
+
+```bash
+python pdf_email.py
 ```
 
 ---
 
 ## 📊 Possíveis aplicações
 
-* Monitoramento climático automatizado
-* Coleta de dados para análise estatística
-* Automação de tarefas repetitivas (RPA)
-* Base para sistemas mais complexos de análise de dados
+- Monitoramento climático automatizado
+- Alertas de temperatura em ambientes críticos
+- Base para sistemas de análise de dados em tempo real
+- Automação de tarefas repetitivas (RPA)
 
 ---
 
 ## 🔮 Melhorias futuras
 
-* Dashboard visual para exibição dos dados
-* Integração com banco de dados
-* Agendamento automático (cron jobs)
-* Deploy em ambiente cloud
-* Logs estruturados e monitoramento
+- Dashboard visual em tempo real
+- Integração com banco de dados
+- Agendamento automático via cron job
+- Coleta de umidade real (atualmente simulada)
+- Deploy em ambiente cloud
 
 ---
 
@@ -117,15 +124,15 @@ Desenvolvido por **Gustavo Martins Luz**
 
 ## 📌 Observações
 
-Este projeto foi desenvolvido com foco em aprendizado prático de:
+Projeto desenvolvido com foco em aprendizado prático de:
 
-* Automação (RPA)
-* Web scraping
-* Organização de código
-* Estruturação de projetos reais
+- Automação (RPA)
+- Web scraping com interceptação de API
+- Interface gráfica com Python
+- Geração de relatórios e notificações automáticas
 
 ---
 
-# 💡 Consideração final
+## 💡 Consideração final
 
-Este projeto representa não apenas um script, mas um **fluxo automatizado completo**, demonstrando capacidade de integrar múltiplas tecnologias em uma solução funcional.
+Este projeto representa um **fluxo RPA completo e funcional** — da coleta automática de dados até a entrega do relatório no e-mail, sem intervenção humana após o início.
